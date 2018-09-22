@@ -1,7 +1,7 @@
 ## 设置
 APK位置： `/system/priv-app/Settings/Settings.apk`
 
-apktool命令： `apktool d *.apk`
+apktool命令： `apktool d -r *.apk`
 
 ### 优化恢复默认应用时浏览器显示包名 com.android.browser 的问题
 代码位置： `com/android/settings/applications/PreferredListSettings$1.smali`
@@ -46,41 +46,64 @@ apktool命令： `apktool d *.apk`
 ### 移除『关于手机』的系统更新菜单
 代码位置： `com/android/settings/device/MiuiDeviceInfoSettings.smali`
 ```
-# MIUI8
-.method public onCreateOptionsMenu
-# return null
+.method public onCreate(Landroid/os/Bundle;)V
+# 搜索代码 miui_update 定位相关项，将诸如以下代码：
+.line 152
+const-string/jumbo v0, "miui_update"
 
-# MIUI9
-.method public onResume()V
-# 搜索代码 Lcom/android/settings/widget/CustomValuePreference 删除相关代码段，如：
-.line 487
-iget-object v0, p0, Lcom/android/settings/device/MiuiDeviceInfoSettings;->OO:Lcom/android/settings/widget/CustomValuePreference;
+invoke-virtual {p0, v0}, Lcom/android/settings/device/MiuiDeviceInfoSettings;->findPreference(Ljava/lang/CharSequence;)Landroid/preference/Preference;
 
-invoke-virtual {v0, v4}, Lcom/android/settings/widget/CustomValuePreference;->setShowRightArrow(Z)V
+move-result-object v0
 
-.line 488
-iget-object v0, p0, Lcom/android/settings/device/MiuiDeviceInfoSettings;->OO:Lcom/android/settings/widget/CustomValuePreference;
+check-cast v0, Lcom/android/settings/widget/CustomValuePreference;
 
-iget-boolean v1, p0, Lcom/android/settings/device/MiuiDeviceInfoSettings;->OI:Z
+iput-object v0, p0, Lcom/android/settings/device/MiuiDeviceInfoSettings;->aog:Lcom/android/settings/widget/CustomValuePreference;
 
-invoke-virtual {v0, v1}, Lcom/android/settings/widget/CustomValuePreference;->setEnabled(Z)V
+.line 153
+iget-boolean v0, p0, Lcom/android/settings/device/MiuiDeviceInfoSettings;->aoa:Z
 
-# 代码位置：res/xml/device_info_settings.xml
-# 将以下代码：
-<com.android.settings.widget.CustomValuePreference android:title="@string/miui_updater" android:key="miui_update">
-    <intent android:targetPackage="com.android.settings" android:targetClass="com.android.settings.TranslationContributors" />
-</com.android.settings.widget.CustomValuePreference>
-<PreferenceCategory />
-<miui.preference.ValuePreference android:persistent="false" android:title="@string/device_name" android:key="device_name" />
+if-eqz v0, :cond_0
+
+.line 154
+invoke-virtual {p0}, Lcom/android/settings/device/MiuiDeviceInfoSettings;->getActivity()Landroid/app/Activity;
+
+move-result-object v0
+
+invoke-static {v0}, Lcom/android/settings/device/a;->abV(Landroid/content/Context;)Ljava/lang/String;
+
+move-result-object v0
+
+.line 155
+invoke-static {v0}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
+
+move-result v0
+
+if-nez v0, :cond_0
+
+.line 156
+iget-object v0, p0, Lcom/android/settings/device/MiuiDeviceInfoSettings;->aog:Lcom/android/settings/widget/CustomValuePreference;
+
+const/4 v3, 0x2
+
+invoke-virtual {v0, v3}, Lcom/android/settings/widget/CustomValuePreference;->ajN(I)V
+
 # 修改为：
-<miui.preference.ValuePreference android:persistent="false" android:title="@string/device_name" android:key="device_name" />
-<PreferenceCategory />
-```
+.line 152
+const-string/jumbo v0, "miui_update"
 
-### 移除音效设置中的均衡器设置项
-代码位置： `com/android/settings/HeadsetSettings.smali`
-```
-# 搜索代码 equalizer 找到其 Preference 的头部，然后在当前类中搜索该头部，将最后一处的removePreference 代码复制到其方法结束 return-void 的前面
+invoke-virtual {p0, v0}, Lcom/android/settings/device/MiuiDeviceInfoSettings;->findPreference(Ljava/lang/CharSequence;)Landroid/preference/Preference;
+
+move-result-object v0
+
+check-cast v0, Lcom/android/settings/widget/CustomValuePreference;
+
+.line 153
+invoke-virtual {p0}, Lcom/android/settings/device/MiuiDeviceInfoSettings;->getPreferenceScreen()Landroid/preference/PreferenceScreen;
+
+move-result-object v3
+
+# v0 对应上面的 move-result-object v0
+invoke-virtual {v3, v0}, Landroid/preference/PreferenceScreen;->removePreference(Landroid/preference/Preference;)Z
 ```
 
 ### 恢复『更多应用』原来的展示样式
@@ -115,33 +138,4 @@ invoke-virtual {v0, v1, v2}, Landroid/content/Intent;->setClassName(Ljava/lang/S
 const-class v1, Lcom/android/settings/applications/ManageApplicationsActivity;
 
 invoke-virtual {v0, p0, v1}, Landroid/content/Intent;->setClass(Landroid/content/Context;Ljava/lang/Class;)Landroid/content/Intent;
-```
-
-### 移除系统与安全中的广告设置项
-
-代码位置： `res/xml/security_settings_debug_log.xml`
-```
-# 删除代码段：
-<CheckBoxPreference android:persistent="false" android:title="@string/user_experience_program_title" android:key="user_experience_program" android:summary="@string/user_experience_program_summary" android:defaultValue="true" />
-
-<Preference android:title="@string/ad_service" android:key="ad_control_settings">
-	<intent android:targetPackage="com.android.settings" android:targetClass="com.android.settings.ad.AdServiceSettings" />
-</Preference>
-
-# 将代码段：
-<CheckBoxPreference android:persistent="false" android:title="@string/upload_debug_log_title" android:key="upload_debug_log" android:summary="@string/upload_debug_log_summary" android:defaultValue="true" />
-//的键值改为 false
-```
-
-### 关于手机显示贡献者信息
-代码位置： `res/values/bools.xml`
-```
-# 将代码 has_translation_contributors 的键值改为 true
-
-# 修改贡献者信息
-# 代码位置：
-res/raw/translation_contributors
-res/raw-bo-rCN/translation_contributors
-res/raw-ug-rCN/translation_contributors
-# 同时修改这3个文件中的文本即可
 ```

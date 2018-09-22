@@ -3,9 +3,7 @@ APK位置： `/system/app/ThemeManager/ThemeManager.apk`
 
 apktool命令： `apktool d -r *.apk`
 
-**注**： V9.5及以上版本已加入混淆，须根据代码特征修改
-
-### 删除首页banners广告位
+### 删除首页的banner推荐
 代码路径： `com/android/thememanager`
 ```
 .method public getAdMarker()I
@@ -43,9 +41,18 @@ goto :goto_0
 :pswitch_3
 goto :goto_0
 ```
+
+### 删除在线主题详情页的广告
+代码路径： `com/android/thememanager/v9`
+```
+# 在当前路径搜索 onAdLoadSucceeded 定位相关方法
+.method public onAdLoadSucceeded
+# 修改该方法的函数体与 .method public onAdLoadFailed 方法一致
+```
+
+### 移除DRM保护
 代码位置： `com/android/thememanager/jni/DrmAgent.smali`
 ```
-# 移除DRM保护
 .method static constructor <clinit>()V
 # 关键代码： "jni_resource_drm"
 # return null

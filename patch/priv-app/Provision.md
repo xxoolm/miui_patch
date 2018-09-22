@@ -6,10 +6,6 @@ apktool命令： `apktool d *.apk`
 ### 移除不必要的设置引导杂项
 代码位置： `com/android/provision/fragment/OtherSettingsFragment.smali`
 ```
-# 移除锁屏画布（仅 MIUI8 适用）
-.method private isSupportMifg()Z
-# return false
-
 .method public onCreate
 # 关键代码：
 button_upload_debug_log_key

@@ -61,4 +61,208 @@ apktool命令： `apktool d -r *.apk`
 .method public onOptionsItemSelected
 .method public onPrepareOptionsMenu
 # 反编译 res，在 values/public.xml 找到 speed_entrance 对应的id，并在这两个方法中删除与之有关的代码段
+# 以 .method public onOptionsItemSelected 为例
+# 删除前：
+.method public onOptionsItemSelected(Landroid/view/MenuItem;)Z
+    .locals 5
+    .param p1, "item"    # Landroid/view/MenuItem;
+
+    .prologue
+    .line 414
+    invoke-super {p0, p1}, Lcom/android/providers/downloads/ui/activity/BaseActivity;->onOptionsItemSelected(Landroid/view/MenuItem;)Z
+
+    .line 415
+    const/4 v0, 0x1
+
+    .line 416
+    .local v0, "handle":Z
+    invoke-interface {p1}, Landroid/view/MenuItem;->getItemId()I
+
+    move-result v2
+
+    sparse-switch v2, :sswitch_data_0
+
+    .line 448
+    const/4 v0, 0x0
+
+    .line 451
+    :cond_0
+    :goto_0
+    return v0
+
+    .line 418
+    :sswitch_0
+    invoke-static {p0}, Lcom/android/providers/downloads/ui/utils/XLUtil;->isNetworkAvailable(Landroid/content/Context;)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_1
+
+    .line 419
+    invoke-virtual {p0}, Lcom/android/providers/downloads/ui/DownloadList;->resumeAllTask()V
+
+    goto :goto_0
+
+    .line 421
+    :cond_1
+    iget-object v2, p0, Lcom/android/providers/downloads/ui/DownloadList;->mContext:Landroid/content/Context;
+
+    const v3, 0x7f09006a
+
+    const/4 v4, 0x0
+
+    invoke-static {v2, v3, v4}, Landroid/widget/Toast;->makeText(Landroid/content/Context;II)Landroid/widget/Toast;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Landroid/widget/Toast;->show()V
+
+    goto :goto_0
+
+    .line 425
+    :sswitch_1
+    invoke-virtual {p0}, Lcom/android/providers/downloads/ui/DownloadList;->pauseAllTask()V
+
+    goto :goto_0
+
+    .line 428
+    :sswitch_2
+    invoke-virtual {p0}, Lcom/android/providers/downloads/ui/DownloadList;->startNewTaskActivity()V
+
+    goto :goto_0
+
+    .line 431
+    :sswitch_3
+    iget-boolean v2, p0, Lcom/android/providers/downloads/ui/DownloadList;->shouldDisabled:Z
+
+    if-nez v2, :cond_0
+
+    .line 432
+    new-instance v1, Landroid/content/Intent;
+
+    const-class v2, Lcom/android/providers/downloads/ui/activity/DownloadSettingActivity;
+
+    invoke-direct {v1, p0, v2}, Landroid/content/Intent;-><init>(Landroid/content/Context;Ljava/lang/Class;)V
+
+    .line 433
+    .local v1, "intent":Landroid/content/Intent;
+    invoke-virtual {p0, v1}, Lcom/android/providers/downloads/ui/DownloadList;->startActivity(Landroid/content/Intent;)V
+
+    goto :goto_0
+
+    .line 445
+    .end local v1    # "intent":Landroid/content/Intent;
+    :sswitch_4
+    invoke-direct {p0}, Lcom/android/providers/downloads/ui/DownloadList;->startNetTestSpeedPage()V
+
+    goto :goto_0
+
+    .line 416
+    :sswitch_data_0
+    .sparse-switch
+        0x7f090041 -> :sswitch_0
+        0x7f090042 -> :sswitch_1
+        0x7f090043 -> :sswitch_3
+        0x7f0900b9 -> :sswitch_2
+        0x7f0901d9 -> :sswitch_4  # 0x7f0901d9 为 speed_entrance 对应的id
+    .end sparse-switch
+.end method
+
+# 删除后：
+.method public onOptionsItemSelected(Landroid/view/MenuItem;)Z
+    .locals 5
+    .param p1, "item"    # Landroid/view/MenuItem;
+
+    .prologue
+    .line 414
+    invoke-super {p0, p1}, Lcom/android/providers/downloads/ui/activity/BaseActivity;->onOptionsItemSelected(Landroid/view/MenuItem;)Z
+
+    .line 415
+    const/4 v0, 0x1
+
+    .line 416
+    .local v0, "handle":Z
+    invoke-interface {p1}, Landroid/view/MenuItem;->getItemId()I
+
+    move-result v2
+
+    sparse-switch v2, :sswitch_data_0
+
+    .line 448
+    const/4 v0, 0x0
+
+    .line 451
+    :cond_0
+    :goto_0
+    return v0
+
+    .line 418
+    :sswitch_0
+    invoke-static {p0}, Lcom/android/providers/downloads/ui/utils/XLUtil;->isNetworkAvailable(Landroid/content/Context;)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_1
+
+    .line 419
+    invoke-virtual {p0}, Lcom/android/providers/downloads/ui/DownloadList;->resumeAllTask()V
+
+    goto :goto_0
+
+    .line 421
+    :cond_1
+    iget-object v2, p0, Lcom/android/providers/downloads/ui/DownloadList;->mContext:Landroid/content/Context;
+
+    const v3, 0x7f09006a
+
+    const/4 v4, 0x0
+
+    invoke-static {v2, v3, v4}, Landroid/widget/Toast;->makeText(Landroid/content/Context;II)Landroid/widget/Toast;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Landroid/widget/Toast;->show()V
+
+    goto :goto_0
+
+    .line 425
+    :sswitch_1
+    invoke-virtual {p0}, Lcom/android/providers/downloads/ui/DownloadList;->pauseAllTask()V
+
+    goto :goto_0
+
+    .line 428
+    :sswitch_2
+    invoke-virtual {p0}, Lcom/android/providers/downloads/ui/DownloadList;->startNewTaskActivity()V
+
+    goto :goto_0
+
+    .line 431
+    :sswitch_3
+    iget-boolean v2, p0, Lcom/android/providers/downloads/ui/DownloadList;->shouldDisabled:Z
+
+    if-nez v2, :cond_0
+
+    .line 432
+    new-instance v1, Landroid/content/Intent;
+
+    const-class v2, Lcom/android/providers/downloads/ui/activity/DownloadSettingActivity;
+
+    invoke-direct {v1, p0, v2}, Landroid/content/Intent;-><init>(Landroid/content/Context;Ljava/lang/Class;)V
+
+    .line 433
+    .local v1, "intent":Landroid/content/Intent;
+    invoke-virtual {p0, v1}, Lcom/android/providers/downloads/ui/DownloadList;->startActivity(Landroid/content/Intent;)V
+
+    goto :goto_0
+
+    .line 416
+    :sswitch_data_0
+    .sparse-switch
+        0x7f090041 -> :sswitch_0
+        0x7f090042 -> :sswitch_1
+        0x7f090043 -> :sswitch_3
+        0x7f0900b9 -> :sswitch_2
+    .end sparse-switch
+.end method
 ```
