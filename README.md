@@ -1,5 +1,5 @@
 # miui_patch
-个人兴趣项目存档，使用 apktool 魔改 MIUI ROM
+个人兴趣项目存档，使用 apktool 魔改 MIUI ROM。[查看教程](https://github.com/winterssy/miui_patch/blob/v10.0/tutorial.md)
 
 ## 环境依赖
 - [Java](http://www.oracle.com/technetwork/pt/java/javase/downloads/index.html)
