@@ -25,4 +25,5 @@
 - [天气](https://github.com/winterssy/miui_patch/blob/v10.0/patch/priv-app/Weather.md)
 
 ## framework
+- [framework.jar](https://github.com/winterssy/miui_patch/blob/v10.0/patch/framework/framework.md)
 - [services.jar](https://github.com/winterssy/miui_patch/blob/v10.0/patch/framework/services.md)
