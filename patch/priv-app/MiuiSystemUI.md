@@ -42,3 +42,23 @@ if-nez v1, :cond_0
 .method public static isInternationalBuild()Z
 # return true
 ```
+
+### 移除状态栏数字电量显示的百分号
+代码位置： `com/android/systemui/BatteryMeterView.smali`
+```
+.method private updatePercentText()V
+# 在语句 invoke-virtual {v0, v1}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V 前增加诸如以下代码：
+const/4 v2, 0x0
+
+invoke-virtual {v1}, Ljava/lang/String;->length()I
+
+move-result v3
+
+add-int/lit8 v3, v3, -0x1
+
+invoke-virtual {v1, v2, v3}, Ljava/lang/String;->substring(II)Ljava/lang/String;
+
+move-result-object v1
+
+# 上面代码的作用是去除数值最后面的百分号
+```
