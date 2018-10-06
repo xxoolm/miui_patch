@@ -12,6 +12,7 @@
 - [小米帐号](https://github.com/winterssy/miui_patch/blob/v10.0/patch/app/XiaomiAccount.md)
 
 ## priv-app
+- [浏览器](https://github.com/winterssy/miui_patch/blob/v10.0/patch/priv-app/Browser.md)
 - [日历](https://github.com/winterssy/miui_patch/blob/v10.0/patch/priv-app/Calendar.md)
 - [垃圾清理](https://github.com/winterssy/miui_patch/blob/v10.0/patch/priv-app/CleanMaster.md)
 - [联系人](https://github.com/winterssy/miui_patch/blob/v10.0/patch/priv-app/Contacts.md)

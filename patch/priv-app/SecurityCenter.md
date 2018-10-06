@@ -193,6 +193,7 @@ am_ads_enable
 
 ### 优化网络助手的通知样式
 如果你在国内版MIUI使用国际版通知样式，请执行此修改，否则会错位显示网络助手的icon
+
 代码路径： `com/miui/networkassistant/utils`
 ```
 # 搜索代码 setIconRes 定位相关方法
