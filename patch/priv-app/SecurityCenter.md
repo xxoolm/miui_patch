@@ -41,15 +41,6 @@ move-result v2
 # 搜索 Lcom/miui/networkassistant/utils/DeviceUtil;->IS_INTERNATIONAL_BUILD:Z 将其改成 Lcom/winter/mysu;->TRUE:Z
 ```
 
-### 移除安全月报
-代码路径： `com/miui/monthreport`
-```
-# 搜索 Lmiui/os/Build;->IS_INTERNATIONAL_BUILD:Z 将其改成 Lcom/winter/mysu;->TRUE:Z
-
-# 同时也将 smali 中其它匹配 monthreport 的 Lmiui/os/Build;->IS_INTERNATIONAL_BUILD:Z 改成 Lcom/winter/mysu;->TRUE:Z
-# 一般在 com/miui/push 目录
-```
-
 ### 恢复应用权限监控&USB安装管理设置入口
 代码位置： `com/miui/permcenter/MainAcitivty.smali`
 ```
@@ -58,11 +49,19 @@ move-result v2
 # 搜索代码 IS_STABLE_VERSION:Z 移除开发版自带的ROOT权限管理（对其 return true）
 ```
 
-### 移除安全体检（立即优化）完成页的资讯推荐
+### 移除安全体检、游戏加速、病毒扫描页的资讯推荐
 代码路径： `com/miui/securityscan`
 ```
 # 在该路径中查找：key_sc_setting_news_recommend ，此代码会在两个方法出现，对布尔值函数return false
 # 等同于：反编译res，在 values/public.xml 找到 preference_key_information_setting_close 对应的id，再在 smali 中查找其对应的布尔值函数，return false
+```
+
+### 移除游戏加速的迅游网络加速组件
+代码路径： `com/miui/gamebooster/constants`
+```
+# 反编译res，在 values/public.xml 中找到 display_gamebooster_xunyou 对应的id，如 0x7f0c0004
+# 然后在该路径搜索找到的 id 定位相应布尔型方法，return false
+# 相当于将方法中的 Lmiui/os/Build;->IS_INTERNATIONAL_BUILD:Z 修改为 Lcom/winter/mysu;->TRUE:Z
 ```
 
 ### 移除安全中心首页底部的推荐广告
