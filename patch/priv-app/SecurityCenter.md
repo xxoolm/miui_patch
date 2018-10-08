@@ -104,17 +104,23 @@ move-result v2
 ```
 
 ### 移除安全体检不必要的扫描检测项
+MIUI开发组闲的蛋疼，在安全中心加入一堆野鸡的扫描检测，可通过下面的手段去掉。
+
 代码路径： `com/miui/securityscan/model/manualitem` 、`com/miui/securityscan/model/system`
 ```
 .method public scan()V
-# return null
-```
+# 修改该方法的函数体，强制设置相关检测项状态为安全，参考示例：
+.method public scan()V
+    .locals 1
 
-### 移除安全体检的“系统更新自动下载检测”
-代码位置： `com/miui/securityscan/model/system/AutoDownloadModel.smali`
-```
-.method public getDesc()Ljava/lang/String;
-# 修改为：
+    sget-object v0, Lcom/miui/securityscan/model/AbsModel$State;->SAFE:Lcom/miui/securityscan/model/AbsModel$State;
+
+    invoke-virtual {p0, v0}, Lcom/miui/securityscan/model/manualitem/AppUpdateModel;->setSafe(Lcom/miui/securityscan/model/AbsModel$State;)V
+
+    return-void
+.end method
+# 其中 Lcom/miui/securityscan/model/manualitem/AppUpdateModel 须根据方法所在位置动态调整
+# 如果方法在 com/miui/securityscan/model/system 路径下，同时对方法所在类中的 .method public getDesc()Ljava/lang/String; 方法作以下修改：
 .method public getDesc()Ljava/lang/String;
     .locals 1
 
@@ -122,7 +128,30 @@ move-result v2
 
     return-object v0
 .end method
-# 注：须同时对 .method public scan()V 方法 return null
+
+# 建议执行上述修改的相关检测项：
+.
+├── manualitem
+│   ├── AppUpdateModel.smali  # 建议更新应用
+│   ├── AutoUpdateModel.smali  # 系统智能更新
+│   ├── CloudServiceModel.smali  # 小米云服务
+│   ├── CloudSpaceModel.smali  # 小米云空间
+│   ├── ConsumePowerRankModel.smali  # 应用耗电排行
+│   ├── DataPurchaseModel.smali  # 流量购买
+│   ├── DefaultAppModel.smali  # 默认应用
+│   ├── DoNotDisturbModel.smali  # 勿扰模式
+│   ├── EyeshieldModel.smali  # 护眼模式
+│   ├── FlowRankModel.smali  # 今日流量排行
+│   ├── MifiInsuranceModel.smali  # 小米意外保
+│   ├── MiRoamingModel.smali  # 小米漫游
+│   ├── MiuiUpdaterModel.smali  # 建议更新系统版本
+│   ├── PermissionRootModel.smali  # ROOT权限
+│   ├── RealnameVerifyModel.smali  # 实名认证
+│   └── RestrictDataUsageModel.smali  # 应用联网权限
+└── system
+    ├── AutoDownloadModel.smali  # 系统更新自动下载
+    ├── DevModeModel.smali  # 开发者选项
+    └── UsbModel.smali  # USB调试
 ```
 
 ### 移除安全中心设置的信息流设置项
