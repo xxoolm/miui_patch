@@ -21,7 +21,7 @@ apktool命令： `apktool d -r *.apk`
 ```
 .method public onCreateViewHolder
 # 在 res/values/public.xml 中找到 element_ad_banner 对应的id
-# 在当前路径搜索该id定位相关方法，可以找到诸如以下的代码，删除相关代码段
+# 在该方法中搜索找到的id，可以发现诸如以下的代码，删除相关代码段
 # 删除前：
 :pswitch_1
 new-instance v0, Lcom/android/thememanager/v9/d/f;
