@@ -265,13 +265,3 @@ am_update_app_notify
 am_ads_enable
 # 对应的布尔型方法，return false
 ```
-
-### 优化网络助手的通知样式
-如果你在国内版MIUI使用国际版通知样式，请执行此修改，否则会错位显示网络助手的icon
-
-代码路径： `com/miui/networkassistant/utils`
-```
-# 搜索代码 setIconRes 定位相关方法
-# 将方法中的 Lcom/miui/networkassistant/utils/DeviceUtil;->IS_INTERNATIONAL_BUILD:Z
-# 修改为 Lcom/winter/mysu;->TRUE:Z
-```

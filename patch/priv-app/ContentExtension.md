@@ -5,6 +5,7 @@ apktool命令： `apktool d -r *.apk`
 
 ### 优化搜索按钮的点击行为
 备注： 如果你删除了MIUI搜索APP，请执行此修改，否则点击搜索按钮会FC
+
 代码位置： `com/miui/contentextension/utils/Utilities.smali`
 ```
 .method public static final searchPlainText(Landroid/content/Context;Landroid/content/ComponentName;Ljava/lang/String;)V

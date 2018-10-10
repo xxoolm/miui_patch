@@ -141,7 +141,9 @@ apktool命令： `apktool d -r *.apk`
 invoke-virtual {v0, p0}, Landroid/widget/RelativeLayout;->setOnClickListener(Landroid/view/View$OnClickListener;)V
 ```
 
-### 移除百度api的签名保护（疑似，如果上述修改后负一屏功能出现异常，请继续执行当前修改）
+### 移除百度api的签名保护（疑似）
+如果上述修改后负一屏功能出现异常，请继续执行当前修改。
+
 代码路径： `com/baidu/platform/comapi`
 ```
 # 搜索 context must be an Application Context 所在的方法，return null
