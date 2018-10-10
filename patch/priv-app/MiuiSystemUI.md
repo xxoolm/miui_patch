@@ -13,18 +13,14 @@ apktool命令： `apktool d -r *.apk`
 # 修改后点击会调用支持WEB搜索的应用，默认是 MIUI 浏览器（若存在），你可以修改此行为，删除诸如以下代码即可：
 new-instance v0, Landroid/content/Intent;
 
-.end local v0    # "intent":Landroid/content/Intent;
 const-string/jumbo v1, "com.android.browser.browser_search"
 
 invoke-direct {v0, v1}, Landroid/content/Intent;-><init>(Ljava/lang/String;)V
 
-.line 268
-.local v0, "intent":Landroid/content/Intent;
 const-string/jumbo v1, "com.android.browser"
 
 invoke-virtual {v0, v1}, Landroid/content/Intent;->setPackage(Ljava/lang/String;)Landroid/content/Intent;
 
-.line 269
 invoke-virtual {p0}, Lcom/android/systemui/statusbar/HeaderView;->getContext()Landroid/content/Context;
 
 move-result-object v1
@@ -60,5 +56,5 @@ invoke-virtual {v1, v2, v3}, Ljava/lang/String;->substring(II)Ljava/lang/String;
 
 move-result-object v1
 
-# 上面代码的作用是去除数值最后面的百分号
+# 上面代码的作用是去除字符串的末字符，即这里的 %
 ```

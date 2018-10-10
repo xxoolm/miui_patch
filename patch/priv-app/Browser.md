@@ -1,7 +1,7 @@
 ## 浏览器
 APK位置： `/system/priv-app/Browser/Browser.apk`
 
-apktool命令： `apktool d -r -b *.apk`
+apktool命令： `apktool d -r *.apk`
 
 说明：浏览器初始化资源位于 `assets` 目录，API相关代码：`api.browser.miui.com` 、`hot.browser.miui.com`
 

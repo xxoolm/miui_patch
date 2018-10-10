@@ -47,7 +47,7 @@ invoke-virtual {v3, v4}, Landroid/content/res/Resources;->getBoolean(I)Z
 
 move-result v3
 
-# 在其后面增加一行代码：
+# 在其后面增加一行代码，其中 v3 对应上面的 move-result v3
 sget-boolean v3, Lcom/winter/mysu;->FALSE:Z
 ```
 
