@@ -153,3 +153,82 @@ const-class v1, Lcom/android/settings/applications/ManageApplicationsActivity;
 
 invoke-virtual {v0, p0, v1}, Landroid/content/Intent;->setClass(Landroid/content/Context;Ljava/lang/Class;)Landroid/content/Intent;
 ```
+
+### 移除系统与安全中的广告设置项
+代码位置： `com/android/settings/SecuritySettings.smali`
+```
+# 搜索 ad_control_settings 定位相关方法
+# 将该方法中的 Lmiui/os/Build;->IS_INTERNATIONAL_BUILD:Z 修改为 Lcom/winter/mysu;->TRUE:Z
+```
+代码位置： `res/xml/security_settings_debug_log.xml`
+```
+# 为 <PreferenceCategory android:title="@string/user_experience_program"> 增加 android:key 属性
+android:key="security_settings_access_control"
+```
+**注意**：上述修改成功的前提是 `ad_control_settings` 所在方法必须在当前 Preferences 加载之后调用。
+
+然而部分 MIUI 版本并非如此，你需要要将该方法调用移动到当前 Preferences 的 addPreferencesFromResource 方法之后。
+
+移动前：
+```
+const v0, 0x7f0800a6  # security_settings_debug_log 对应的id
+
+invoke-virtual {p0, v0}, Lcom/android/settings/SecuritySettings;->addPreferencesFromResource(I)V
+
+const-string/jumbo v0, "user_experience_program"
+
+invoke-virtual {v5, v0}, Landroid/preference/PreferenceScreen;->findPreference(Ljava/lang/CharSequence;)Landroid/preference/Preference;
+
+move-result-object v0
+
+check-cast v0, Landroid/preference/CheckBoxPreference;
+
+iput-object v0, p0, Lcom/android/settings/SecuritySettings;->boy:Landroid/preference/CheckBoxPreference;
+
+const-string/jumbo v0, "upload_debug_log"
+
+invoke-virtual {v5, v0}, Landroid/preference/PreferenceScreen;->findPreference(Ljava/lang/CharSequence;)Landroid/preference/Preference;
+
+move-result-object v0
+
+check-cast v0, Landroid/preference/CheckBoxPreference;
+
+iput-object v0, p0, Lcom/android/settings/SecuritySettings;->box:Landroid/preference/CheckBoxPreference;
+
+invoke-virtual {p0}, Lcom/android/settings/SecuritySettings;->getActivity()Landroid/app/Activity;
+
+move-result-object v0
+```
+移动后：
+```
+const v0, 0x7f0800a6
+
+invoke-virtual {p0, v0}, Lcom/android/settings/SecuritySettings;->addPreferencesFromResource(I)V
+
+const-string/jumbo v0, "user_experience_program"
+
+invoke-virtual {v5, v0}, Landroid/preference/PreferenceScreen;->findPreference(Ljava/lang/CharSequence;)Landroid/preference/Preference;
+
+move-result-object v0
+
+check-cast v0, Landroid/preference/CheckBoxPreference;
+
+iput-object v0, p0, Lcom/android/settings/SecuritySettings;->boy:Landroid/preference/CheckBoxPreference;
+
+const-string/jumbo v0, "upload_debug_log"
+
+invoke-virtual {v5, v0}, Landroid/preference/PreferenceScreen;->findPreference(Ljava/lang/CharSequence;)Landroid/preference/Preference;
+
+move-result-object v0
+
+check-cast v0, Landroid/preference/CheckBoxPreference;
+
+iput-object v0, p0, Lcom/android/settings/SecuritySettings;->box:Landroid/preference/CheckBoxPreference;
+
+# 调用 ad_control_settings 所在的方法
+invoke-direct {p0}, Lcom/android/settings/SecuritySettings;->bcq()V
+
+invoke-virtual {p0}, Lcom/android/settings/SecuritySettings;->getActivity()Landroid/app/Activity;
+
+move-result-object v0
+```
