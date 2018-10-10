@@ -274,7 +274,7 @@ move-result-object v1
 invoke-virtual {v0, v1}, Landroid/preference/PreferenceGroup;->removePreference(Landroid/preference/Preference;)Z
 ```
 
-### 移除『消息通知管理』设置树
+### 移除『消息通知管理』设置树（可选）
 代码位置： `com/android/browser/preferences/MainPreferenceFragment.smali`
 ```
 .method public onCreate(Landroid/os/Bundle;)V
