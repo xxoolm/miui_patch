@@ -6,7 +6,7 @@ apktool命令： `apktool d -r *.apk`
 对 `IS_INTERNATIONAL_BUILD:Z` 统一处理的方法：将 `winter` 文件夹拷贝到 `smali/com` 目录下，将 `Lmiui/os/Build;->IS_INTERNATIONAL_BUILD:Z` 修改为 `Lcom/winter/mysu;->TRUE:Z`
 
 
-### 移除安全扫描、游戏加速、应用锁、流量助手中的广告
+### 移除安全扫描、游戏加速、应用锁、网络助手中的广告
 
 反编译 res，在 `values/public.xml` 分别找到 `display_antivirus_Ads` 、`display_gamebooster_Ads` 、`display_gamebooster_xunyou` 、`overlay_config_datausage_purchase_enabled` （均为 bool 型）对应的 `id`，再在 `smali` 中查找其对应的布尔型方法，return false
 ```
