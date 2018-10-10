@@ -3,8 +3,6 @@ APK位置： `/system/priv-app/SecurityCenter/SecurityCenter.apk`
 
 apktool命令： `apktool d -r *.apk`
 
-对 `IS_INTERNATIONAL_BUILD:Z` 统一处理的方法：将 `winter` 文件夹拷贝到 `smali/com` 目录下，将 `Lmiui/os/Build;->IS_INTERNATIONAL_BUILD:Z` 修改为 `Lcom/winter/mysu;->TRUE:Z`
-
 ### 移除网络助手主界面的『流量购买』条目
 代码位置： `com/miui/networkassistant/ui/NetworkAssistantActivity.smali`
 ```
@@ -13,6 +11,11 @@ apktool命令： `apktool d -r *.apk`
 ```
 
 ### 移除网络助手的流量购买提醒
+代码位置： `com/miui/networkassistant/utils/LoadConfigUtil.smali`
+```
+.method public static isDataUsagePurchaseEnabled
+# return false
+```
 代码位置： `com/miui/networkassistant/config/SimUserInfo.smali`
 ```
 .method public isPurchaseTipsEnable()Z
@@ -27,10 +30,25 @@ invoke-static {v4}, Lmiui/provider/ExtraNetwork;->isTrafficPurchaseSupported(Lan
 move-result v2
 # 修改为 sget-boolean v2, Lcom/winter/mysu;->FALSE:Z ，其中 v2 对应上面的 move-result v2
 ```
-代码位置： `com/miui/networkassistant/utils/LoadConfigUtil.smali`
+代码位置： `com/miui/networkassistant/ui/fragment/LockScreenTrafficFragment.smali`
 ```
-.method public static isDataUsagePurchaseEnabled
-# return false
+.method protected initView()V
+# 在 res/values/public.xml 查找 config_lock_screen_traffic_purchase_enabled 的 id 值
+# 然后在该方法中搜索相应 id 可以发现诸如以下的代码：
+iget-object v3, p0, Lcom/miui/networkassistant/ui/fragment/LockScreenTrafficFragment;->mAppContext:Landroid/content/Context;
+
+invoke-virtual {v3}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
+
+move-result-object v3
+
+const/high16 v4, 0x7f0c0000
+
+invoke-virtual {v3, v4}, Landroid/content/res/Resources;->getBoolean(I)Z
+
+move-result v3
+
+# 在其后面增加一行代码：
+sget-boolean v3, Lcom/winter/mysu;->FALSE:Z
 ```
 
 ### 移除网络诊断的一键WLAN测速功能
@@ -44,8 +62,38 @@ move-result v2
 代码位置： `com/miui/permcenter/MainAcitivty.smali`
 ```
 .method protected onCreate
-# 找到该方法中调用的布尔型函数()Z，在 com/miui/permcenter 路径查找对应方法，return ture
-# 搜索代码 IS_STABLE_VERSION:Z 移除开发版自带的ROOT权限管理（对其 return true）
+# 在该方法的开头可以找到诸如以下的代码：
+const v1, 0x7f0e02cc  # handle_item_root 对应的id
+
+const/16 v3, 0x17
+
+invoke-super {p0, p1}, Lcom/miui/common/c/a;->onCreate(Landroid/os/Bundle;)V
+
+const v0, 0x7f03011c  # pm_activity_main 对应的id
+
+invoke-virtual {p0, v0}, Lcom/miui/permcenter/MainAcitivty;->setContentView(I)V
+
+invoke-static {}, Lcom/miui/permcenter/d;->cz()Z
+
+move-result v0
+
+if-nez v0, :cond_0
+
+invoke-static {p0}, Lcom/miui/permcenter/install/i;->getInstance(Landroid/content/Context;)Lcom/miui/permcenter/install/i;
+
+move-result-object v0
+
+invoke-virtual {v0}, Lcom/miui/permcenter/install/i;->aB()Z
+
+move-result v0
+
+# 找到该方法中调用的布尔型函数()Z，例如此处的：
+Lcom/miui/permcenter/d;->cz()Z
+Lcom/miui/permcenter/install/i;->aB()Z
+# 在 com/miui/permcenter 路径查找对应方法，return ture
+
+# 如果你使用的是开发版，希望移除自带的ROOT权限管理
+# 可将该方法中的 Lmiui/os/Build;->IS_STABLE_VERSION:Z 修改为 Lcom/winter/mysu;->TRUE:Z
 ```
 
 ### 移除安全体检、游戏加速、病毒扫描页的资讯推荐
