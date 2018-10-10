@@ -99,7 +99,7 @@ Lcom/miui/permcenter/install/i;->aB()Z
 ### 移除安全体检、游戏加速、病毒扫描页的资讯推荐
 代码路径： `com/miui/securityscan`
 ```
-# 在该路径中查找：key_sc_setting_news_recommend ，此代码会在两个方法出现，对布尔值函数return false
+# 在该路径中查找：key_sc_setting_news_recommend ，此代码会在两个方法出现，对布尔型方法 return false
 # 等同于：反编译res，在 values/public.xml 找到 preference_key_information_setting_close 对应的id，再在 smali 中查找其对应的布尔值函数，return false
 ```
 
