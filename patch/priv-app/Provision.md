@@ -36,6 +36,5 @@ invoke-virtual {v0, v1}, Landroid/preference/PreferenceScreen;->removePreference
 button_user_experience_key
 button_mifg_online_content
 button_upload_debug_log_key
-button_auto_update_key
-# 的键值为false
+# 的 defaultValue 为 false
 ```

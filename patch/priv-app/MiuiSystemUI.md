@@ -32,7 +32,7 @@ apktool命令： `apktool d -s *.apk`
 # 将代码 status_bar_clock_date_format 的键值由『 M月d日 E 』改为『 M月d日 E N月e t 』
 ```
 
-### 移除任务管理上方的音乐播放控件（MIUI9 已取消）
+### 移除任务管理上方的音乐播放控件（仅适用于 MIUI8）
 代码位置： `com/android/systemui/taskmanager/RecentsPanelMusicController.smali`
 ```
 .method public isMusicActive()Z

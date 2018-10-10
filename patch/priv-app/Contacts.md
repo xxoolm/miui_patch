@@ -29,14 +29,14 @@ apktool命令： `apktool d -r *.apk`
 # return false
 ```
 
-### 移除标记为诈骗电话时出现的小米保险推广（MIUI9 已取消）
+### 移除标记为诈骗电话时出现的小米保险推广（仅适用于 MIUI8）
 代码位置： `com/android/contacts/util/YellowPageProxy.smali`
 ```
 .method public static showFraudInsurance
 # return false
 ```
 
-### 移除生活黄页的电话加油包组件 （新版 MIUI9 已取消）
+### 移除生活黄页的电话加油包组件 （仅适用于 MIUI8）
 代码位置： `com/android/contacts/yellowpage/util/LivetalkUtils.smali`
 ```
 .method public static isSupportLivetalk
@@ -45,7 +45,7 @@ apktool命令： `apktool d -r *.apk`
 # return false
 ```
 
-### 移除生活黄页TAB （仅适用 MIUI8）
+### 移除生活黄页TAB （仅适用于 MIUI8）
 代码位置： `com/android/contacts/util/YellowPageProxy.smali`
 ```
 .method public static isYellowPageTabAvailable()Z

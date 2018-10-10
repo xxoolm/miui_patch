@@ -11,17 +11,15 @@ apktool命令： `apktool d -r *.apk`
 ```
 
 ### 移除快递物流信息详情页的菜鸟裹裹APP推广
-代码位置： `com/miui/personalassistant/express/fragment/ExpressProgressFragment.smali`
+代码位置： `com/miui/personalassistant/express/fragment/DetailFragment.smali`
 
 修改前：
 ```
 .method private showCainiaoBanner()V
     .locals 3
 
-    .prologue
     const/4 v2, 0x0
 
-    .line 232
     iget-object v0, p0, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment;->mResult:Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment$ExpressProgressResult;
 
     iget-boolean v0, v0, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment$ExpressProgressResult;->mHasItem:Z
@@ -40,12 +38,10 @@ apktool命令： `apktool d -r *.apk`
 
     if-nez v0, :cond_0
 
-    .line 233
     iget-object v0, p0, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment;->mGoodsDetail:Landroid/widget/LinearLayout;
 
     invoke-virtual {v0, v2}, Landroid/widget/LinearLayout;->setVisibility(I)V
 
-    .line 234
     iget-object v0, p0, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment;->mExpressSummary:Landroid/widget/RelativeLayout;
 
     new-instance v1, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment$1;
@@ -55,29 +51,24 @@ apktool命令： `apktool d -r *.apk`
     # 点击事件，须删除相关代码段
     invoke-virtual {v0, v1}, Landroid/widget/RelativeLayout;->setOnClickListener(Landroid/view/View$OnClickListener;)V
 
-    .line 242
     :cond_0
     iget-object v0, p0, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment;->mBannerDivider:Landroid/widget/ImageView;
 
     if-eqz v0, :cond_1
 
-    .line 243
     iget-object v0, p0, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment;->mBannerDivider:Landroid/widget/ImageView;
 
     invoke-virtual {v0, v2}, Landroid/widget/ImageView;->setVisibility(I)V
 
-    .line 245
     :cond_1
     iget-object v0, p0, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment;->mCainiaoBanner:Landroid/widget/RelativeLayout;
 
     if-eqz v0, :cond_2
 
-    .line 246
     iget-object v0, p0, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment;->mCainiaoBanner:Landroid/widget/RelativeLayout;
 
     invoke-virtual {v0, v2}, Landroid/widget/RelativeLayout;->setVisibility(I)V
 
-    .line 247
     iget-object v0, p0, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment;->mCainiaoBanner:Landroid/widget/RelativeLayout;
 
     new-instance v1, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment$2;
@@ -87,7 +78,6 @@ apktool命令： `apktool d -r *.apk`
     # 点击事件，须删除相关代码段
     invoke-virtual {v0, v1}, Landroid/widget/RelativeLayout;->setOnClickListener(Landroid/view/View$OnClickListener;)V
 
-    .line 254
     :cond_2
     return-void
 .end method
@@ -98,10 +88,8 @@ apktool命令： `apktool d -r *.apk`
 .method private showCainiaoBanner()V
     .locals 3
 
-    .prologue
     const/16 v2, 0x8 # 传参给 setVisibility 方法，使布局不可见且不占用空间
 
-    .line 232
     iget-object v0, p0, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment;->mResult:Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment$ExpressProgressResult;
 
     iget-boolean v0, v0, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment$ExpressProgressResult;->mHasItem:Z
@@ -120,40 +108,42 @@ apktool命令： `apktool d -r *.apk`
 
     if-nez v0, :cond_0
 
-    .line 233
     iget-object v0, p0, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment;->mGoodsDetail:Landroid/widget/LinearLayout;
 
     invoke-virtual {v0, v2}, Landroid/widget/LinearLayout;->setVisibility(I)V
 
-    .line 242
     :cond_0
     iget-object v0, p0, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment;->mBannerDivider:Landroid/widget/ImageView;
 
     if-eqz v0, :cond_1
 
-    .line 243
     iget-object v0, p0, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment;->mBannerDivider:Landroid/widget/ImageView;
 
     invoke-virtual {v0, v2}, Landroid/widget/ImageView;->setVisibility(I)V
 
-    .line 245
     :cond_1
     iget-object v0, p0, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment;->mCainiaoBanner:Landroid/widget/RelativeLayout;
 
     if-eqz v0, :cond_2
 
-    .line 246
     iget-object v0, p0, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment;->mCainiaoBanner:Landroid/widget/RelativeLayout;
 
     invoke-virtual {v0, v2}, Landroid/widget/RelativeLayout;->setVisibility(I)V
 
-    .line 254
     :cond_2
     return-void
 .end method
 ```
+代码位置： `com/miui/personalassistant/ui/fragment/ExpressSettingFragment.smali`
+```
+.method private initProviderView(Landroid/view/View;)V
+# 删除以下代码：
+invoke-virtual {v0, p0}, Landroid/widget/RelativeLayout;->setOnClickListener(Landroid/view/View$OnClickListener;)V
+```
 
-### 移除垃圾的保护机制（貌似是签名）
+### 移除百度api的签名保护（疑似）
+如果上述修改后负一屏功能出现异常，请继续执行当前修改。
+
 代码路径： `com/baidu/platform/comapi`
 ```
 # 搜索 context must be an Application Context 所在的方法，return null

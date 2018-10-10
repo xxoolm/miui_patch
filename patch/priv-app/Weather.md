@@ -3,16 +3,6 @@ APK位置： `/system/priv-app/Weather/Weather.apk`
 
 apktool命令： `apktool d -r *.apk`
 
-### 移除信息流设置项
-代码位置： `com/miui/weather2/ActivitySet.smali`
-```
-.method protected onCreate
-# 在res/values/public.xml中找到 information_manager 对应的id并在当前方法搜索，删除所在的代码段，同时删除以下代码段：
-iget-object v2, p0, Lcom/miui/weather2/ActivitySet;->mFooterInformationView:Landroid/view/View;
-
-invoke-virtual {v1, v2}, Landroid/widget/ListView;->addFooterView(Landroid/view/View;)V
-```
-
 ### 移除主界面的广告
 代码位置： `com/miui/weather2/tools/ToolUtils.smali`
 ```
@@ -40,4 +30,14 @@ invoke-static {p0}, Lcom/miui/weather2/tools/ToolUtils;->canRequestCommercialInf
 
 move-result v0
 # 修改为 sget-boolean v0, Lcom/winter/mysu;->TRUE:Z
+```
+
+### 移除信息流设置项
+代码位置： `com/miui/weather2/ActivitySet.smali`
+```
+.method protected onCreate
+# 在 res/values/public.xml 中找到 information_manager 对应的id并在当前方法搜索，删除相关执行代码，同时删除以下代码段：
+iget-object v2, p0, Lcom/miui/weather2/ActivitySet;->mFooterInformationView:Landroid/view/View;
+
+invoke-virtual {v1, v2}, Landroid/widget/ListView;->addFooterView(Landroid/view/View;)V
 ```

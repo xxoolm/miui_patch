@@ -13,8 +13,6 @@ apktool命令： `apktool d -r *.apk`
 .method private ky()V
     .locals 2
 
-    .prologue
-    .line 312
     iget-object v0, p0, Lcom/miui/cloudservice/ui/M;->gb:Lcom/miui/cloudservice/ui/z;
 
     const-string/jumbo v1, "micloudMember"
@@ -27,7 +25,6 @@ apktool命令： `apktool d -r *.apk`
 
     iput-object v0, p0, Lcom/miui/cloudservice/ui/M;->gc:Landroid/preference/PreferenceCategory;
 
-    .line 314
     new-instance v0, Lcom/miui/cloudservice/ui/k;
 
     iget-object v1, p0, Lcom/miui/cloudservice/ui/M;->fV:Landroid/app/Activity;
@@ -36,47 +33,40 @@ apktool命令： `apktool d -r *.apk`
 
     iput-object v0, p0, Lcom/miui/cloudservice/ui/M;->gd:Lcom/miui/cloudservice/ui/k;
 
-    .line 315
     iget-object v0, p0, Lcom/miui/cloudservice/ui/M;->gd:Lcom/miui/cloudservice/ui/k;
 
     const/4 v1, 0x0
 
     invoke-virtual {v0, v1}, Lcom/miui/cloudservice/ui/k;->setOrder(I)V
 
-    .line 316
     iget-object v0, p0, Lcom/miui/cloudservice/ui/M;->gc:Landroid/preference/PreferenceCategory;
 
     iget-object v1, p0, Lcom/miui/cloudservice/ui/M;->gd:Lcom/miui/cloudservice/ui/k;
 
     invoke-virtual {v0, v1}, Landroid/preference/PreferenceCategory;->addPreference(Landroid/preference/Preference;)Z
 
-    .line 318
     invoke-direct {p0}, Lcom/miui/cloudservice/ui/M;->kA()Z
 
     move-result v0
 
     if-nez v0, :cond_0
 
-    .line 319
     invoke-direct {p0}, Lcom/miui/cloudservice/ui/M;->kq()Lcom/miui/cloudservice/ui/Q;
 
     move-result-object v0
 
     iput-object v0, p0, Lcom/miui/cloudservice/ui/M;->gf:Lcom/miui/cloudservice/ui/Q;
 
-    .line 320
     iget-object v0, p0, Lcom/miui/cloudservice/ui/M;->gf:Lcom/miui/cloudservice/ui/Q;
 
     if-eqz v0, :cond_0
 
-    .line 321
     iget-object v0, p0, Lcom/miui/cloudservice/ui/M;->gc:Landroid/preference/PreferenceCategory;
 
     iget-object v1, p0, Lcom/miui/cloudservice/ui/M;->gf:Lcom/miui/cloudservice/ui/Q;
 
     invoke-virtual {v0, v1}, Landroid/preference/PreferenceCategory;->addPreference(Landroid/preference/Preference;)Z
 
-    .line 311
     :cond_0
     return-void
 .end method
@@ -87,8 +77,6 @@ apktool命令： `apktool d -r *.apk`
 .method private ky()V
     .locals 2
 
-    .prologue
-    .line 312
     iget-object v0, p0, Lcom/miui/cloudservice/ui/M;->gb:Lcom/miui/cloudservice/ui/z;
 
     const-string/jumbo v1, "micloudMember"
@@ -101,7 +89,6 @@ apktool命令： `apktool d -r *.apk`
 
     iput-object v0, p0, Lcom/miui/cloudservice/ui/M;->gc:Landroid/preference/PreferenceCategory;
 
-    .line 314
     new-instance v0, Lcom/miui/cloudservice/ui/k;
 
     iget-object v1, p0, Lcom/miui/cloudservice/ui/M;->fV:Landroid/app/Activity;
@@ -110,14 +97,12 @@ apktool命令： `apktool d -r *.apk`
 
     iput-object v0, p0, Lcom/miui/cloudservice/ui/M;->gd:Lcom/miui/cloudservice/ui/k;
 
-    .line 315
     iget-object v0, p0, Lcom/miui/cloudservice/ui/M;->gd:Lcom/miui/cloudservice/ui/k;
 
     const/4 v1, 0x0
 
     invoke-virtual {v0, v1}, Lcom/miui/cloudservice/ui/k;->setOrder(I)V
 
-    .line 311
     return-void
 .end method
 ```
@@ -132,8 +117,6 @@ apktool命令： `apktool d -r *.apk`
 .method private kz()V
     .locals 2
 
-    .prologue
-    .line 303
     iget-object v0, p0, Lcom/miui/cloudservice/ui/M;->gb:Lcom/miui/cloudservice/ui/z;
 
     const-string/jumbo v1, "cloudStorage"
@@ -146,7 +129,6 @@ apktool命令： `apktool d -r *.apk`
 
     iput-object v0, p0, Lcom/miui/cloudservice/ui/M;->fY:Landroid/preference/PreferenceCategory;
 
-    .line 304
     new-instance v0, Lcom/miui/cloudservice/ui/P;
 
     iget-object v1, p0, Lcom/miui/cloudservice/ui/M;->fV:Landroid/app/Activity;
@@ -155,7 +137,6 @@ apktool命令： `apktool d -r *.apk`
 
     iput-object v0, p0, Lcom/miui/cloudservice/ui/M;->gh:Lcom/miui/cloudservice/ui/P;
 
-    .line 305
     new-instance v0, Lcom/miui/cloudservice/ui/U;
 
     iget-object v1, p0, Lcom/miui/cloudservice/ui/M;->fV:Landroid/app/Activity;
@@ -164,21 +145,18 @@ apktool命令： `apktool d -r *.apk`
 
     iput-object v0, p0, Lcom/miui/cloudservice/ui/M;->ge:Lcom/miui/cloudservice/ui/U;
 
-    .line 307
     iget-object v0, p0, Lcom/miui/cloudservice/ui/M;->fY:Landroid/preference/PreferenceCategory;
 
     iget-object v1, p0, Lcom/miui/cloudservice/ui/M;->ge:Lcom/miui/cloudservice/ui/U;
 
     invoke-virtual {v0, v1}, Landroid/preference/PreferenceCategory;->addPreference(Landroid/preference/Preference;)Z
 
-    .line 308
     iget-object v0, p0, Lcom/miui/cloudservice/ui/M;->fY:Landroid/preference/PreferenceCategory;
 
     iget-object v1, p0, Lcom/miui/cloudservice/ui/M;->gh:Lcom/miui/cloudservice/ui/P;
 
     invoke-virtual {v0, v1}, Landroid/preference/PreferenceCategory;->addPreference(Landroid/preference/Preference;)Z
 
-    .line 302
     return-void
 .end method
 ```
@@ -188,8 +166,6 @@ apktool命令： `apktool d -r *.apk`
 .method private kz()V
     .locals 2
 
-    .prologue
-    .line 303
     iget-object v0, p0, Lcom/miui/cloudservice/ui/M;->gb:Lcom/miui/cloudservice/ui/z;
 
     const-string/jumbo v1, "cloudStorage"
@@ -202,7 +178,6 @@ apktool命令： `apktool d -r *.apk`
 
     iput-object v0, p0, Lcom/miui/cloudservice/ui/M;->fY:Landroid/preference/PreferenceCategory;
 
-    .line 304
     new-instance v0, Lcom/miui/cloudservice/ui/P;
 
     iget-object v1, p0, Lcom/miui/cloudservice/ui/M;->fV:Landroid/app/Activity;
@@ -211,7 +186,6 @@ apktool命令： `apktool d -r *.apk`
 
     iput-object v0, p0, Lcom/miui/cloudservice/ui/M;->gh:Lcom/miui/cloudservice/ui/P;
 
-    .line 305
     new-instance v0, Lcom/miui/cloudservice/ui/U;
 
     iget-object v1, p0, Lcom/miui/cloudservice/ui/M;->fV:Landroid/app/Activity;
@@ -220,7 +194,6 @@ apktool命令： `apktool d -r *.apk`
 
     iput-object v0, p0, Lcom/miui/cloudservice/ui/M;->ge:Lcom/miui/cloudservice/ui/U;
 
-    .line 302
     return-void
 .end method
 ```

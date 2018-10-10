@@ -31,8 +31,6 @@ apktool命令： `apktool d -r *.apk`
 .method private initInfoFlowPref()V
     .locals 2
 
-    .prologue
-    .line 266
     const-string/jumbo v0, "pref_info_flow"
 
     invoke-virtual {p0, v0}, Lcom/android/providers/downloads/ui/fragment/DownloadSettingFragment;->findPreference(Ljava/lang/CharSequence;)Landroid/preference/Preference;
@@ -41,7 +39,6 @@ apktool命令： `apktool d -r *.apk`
 
     iput-object v0, p0, Lcom/android/providers/downloads/ui/fragment/DownloadSettingFragment;->mInfoFlowPref:Landroid/preference/Preference;
 
-    .line 273
     invoke-virtual {p0}, Lcom/android/providers/downloads/ui/fragment/DownloadSettingFragment;->getPreferenceScreen()Landroid/preference/PreferenceScreen;
 
     move-result-object v0
@@ -50,15 +47,56 @@ apktool命令： `apktool d -r *.apk`
 
     invoke-virtual {v0, v1}, Landroid/preference/PreferenceScreen;->removePreference(Landroid/preference/Preference;)Z
 
-    .line 265
     return-void
 .end method
 ```
 
-### 移除WLAN测速入口
+### 移除一键WLAN测速入口
 代码位置： `com/android/providers/downloads/ui/DownloadList.smali`
 ```
 .method public onOptionsItemSelected
 .method public onPrepareOptionsMenu
 # 反编译 res，在 values/public.xml 找到 speed_entrance 对应的id，并在这两个方法中删除与之有关的代码段
+
+# .method public onPrepareOptionsMenu 方法修改示例
+# 删除前：
+.method public onOptionsItemSelected(Landroid/view/MenuItem;)Z
+    .locals 5
+
+    # 省略的代码
+
+    :sswitch_4
+    invoke-direct {p0}, Lcom/android/providers/downloads/ui/DownloadList;->startNetTestSpeedPage()V
+
+    goto :goto_0
+
+    :sswitch_data_0
+    .sparse-switch
+        0x7f090040 -> :sswitch_0
+        0x7f090041 -> :sswitch_1
+        0x7f090042 -> :sswitch_3
+        0x7f0900b8 -> :sswitch_2
+        0x7f0901d8 -> :sswitch_4  # 0x7f0901d8 为 speed_entrance 对应的id
+    .end sparse-switch
+.end method
+
+# 删除后：
+.method public onOptionsItemSelected(Landroid/view/MenuItem;)Z
+    .locals 5
+
+    # 省略的代码
+
+    :sswitch_data_0
+    .sparse-switch
+        0x7f090040 -> :sswitch_0
+        0x7f090041 -> :sswitch_1
+        0x7f090042 -> :sswitch_3
+        0x7f0900b8 -> :sswitch_2
+    .end sparse-switch
+.end method
+
+# 在 .method public onPrepareOptionsMenu 方法中删除以下代码：
+const v0, 0x7f0901d8
+
+invoke-virtual {p0, p1, v0}, Lcom/android/providers/downloads/ui/DownloadList;->addMenu(Landroid/view/Menu;I)V
 ```
