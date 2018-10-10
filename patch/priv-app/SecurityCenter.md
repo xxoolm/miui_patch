@@ -3,7 +3,7 @@ APK位置： `/system/priv-app/SecurityCenter/SecurityCenter.apk`
 
 apktool命令： `apktool d -r *.apk`
 
-### 移除网络助手主界面的『流量购买』条目
+### 移除网络助手主界面的『流量购买』标签
 代码位置： `com/miui/networkassistant/ui/NetworkAssistantActivity.smali`
 ```
 .method private checkTrafficPurchaseEnable
