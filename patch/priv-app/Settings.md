@@ -7,33 +7,47 @@ apktool命令： `apktool d -r *.apk`
 代码位置： `com/android/settings/applications/PreferredListSettings$1.smali`
 ```
 .method public onClick
-# 搜索代码：com.android.browser
-# 删除该行代码，同时删除下面invoke-virtual调用语句中包含该代码的变量，如v4
-# 将 setDefaultBrowserPackageNameAsUser(Ljava/lang/String;I)Z 修改为 getDefaultBrowserPackageNameAsUser(I)Ljava/lang/String;
-# 注：此处可能是 setDefaultBrowserPackageName(Ljava/lang/String;I)Z ，须修改为 getDefaultBrowserPackageName(I)Ljava/lang/String;
+# 搜索 com.android.browser 可以找到诸如以下的代码片段：
+const-string/jumbo v4, "com.android.browser"
+
+iget-object v5, p0, Lcom/android/settings/applications/PreferredListSettings$1;->sQ:Lcom/android/settings/applications/PreferredListSettings;
+
+invoke-virtual {v5}, Lcom/android/settings/applications/PreferredListSettings;->getUserId()I
+
+move-result v5
+
+invoke-virtual {v0, v4, v5}, Landroid/content/pm/PackageManager;->setDefaultBrowserPackageNameAsUser(Ljava/lang/String;I)Z
+
+# 将其修改为：
+iget-object v5, p0, Lcom/android/settings/applications/PreferredListSettings$1;->sQ:Lcom/android/settings/applications/PreferredListSettings;
+
+invoke-virtual {v5}, Lcom/android/settings/applications/PreferredListSettings;->getUserId()I
+
+move-result v5
+
+# 注意此处 setDefaultBrowserPackageNameAsUser 变成 getDefaultBrowserPackageNameAsUser
+invoke-virtual {v0, v5}, Landroid/content/pm/PackageManager;->getDefaultBrowserPackageNameAsUser(I)Ljava/lang/String;
 ```
 
 ### 移除『我的设备』，恢复为『关于手机』
 代码路径： `com/android/settings/device`
 ```
-# 搜索代码 IS_GLOBAL_BUILD:Z ，该语句会在多个方法出现，选择例如下面的布尔值类型函数，并对该语句 return true (Lcom/winter/mysu;->TRUE:Z)
+# 搜索代码 Lmiui/os/Build;->IS_GLOBAL_BUILD:Z ，该语句会在多个方法出现，定位代码结构与示例方法类似的布尔型方法
+# 将 Lmiui/os/Build;->IS_GLOBAL_BUILD:Z 修改为 Lcom/winter/mysu;->TRUE:Z
+# 参考示例：
 .method public static Ib(Landroid/content/Context;)Z
     .locals 1
 
-    .prologue
-    .line 231
     sget-boolean v0, Lmiui/os/Build;->IS_GLOBAL_BUILD:Z
 
     const/4 v0, 0x1
 
     if-eqz v0, :cond_0
 
-    .line 232
     const/4 v0, 0x0
 
     return v0
 
-    .line 234
     :cond_0
     invoke-static {}, Lcom/android/settings/device/a;->In()Z
 
@@ -48,7 +62,6 @@ apktool命令： `apktool d -r *.apk`
 ```
 .method public onCreate(Landroid/os/Bundle;)V
 # 搜索代码 miui_update 定位相关项，将诸如以下代码：
-.line 152
 const-string/jumbo v0, "miui_update"
 
 invoke-virtual {p0, v0}, Lcom/android/settings/device/MiuiDeviceInfoSettings;->findPreference(Ljava/lang/CharSequence;)Landroid/preference/Preference;
@@ -59,12 +72,10 @@ check-cast v0, Lcom/android/settings/widget/CustomValuePreference;
 
 iput-object v0, p0, Lcom/android/settings/device/MiuiDeviceInfoSettings;->aog:Lcom/android/settings/widget/CustomValuePreference;
 
-.line 153
 iget-boolean v0, p0, Lcom/android/settings/device/MiuiDeviceInfoSettings;->aoa:Z
 
 if-eqz v0, :cond_0
 
-.line 154
 invoke-virtual {p0}, Lcom/android/settings/device/MiuiDeviceInfoSettings;->getActivity()Landroid/app/Activity;
 
 move-result-object v0
@@ -73,22 +84,22 @@ invoke-static {v0}, Lcom/android/settings/device/a;->abV(Landroid/content/Contex
 
 move-result-object v0
 
-.line 155
 invoke-static {v0}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
 
 move-result v0
 
 if-nez v0, :cond_0
 
-.line 156
 iget-object v0, p0, Lcom/android/settings/device/MiuiDeviceInfoSettings;->aog:Lcom/android/settings/widget/CustomValuePreference;
 
 const/4 v3, 0x2
 
 invoke-virtual {v0, v3}, Lcom/android/settings/widget/CustomValuePreference;->ajN(I)V
 
+:cond_0
+const-string/jumbo v0, "model_number"
+
 # 修改为：
-.line 152
 const-string/jumbo v0, "miui_update"
 
 invoke-virtual {p0, v0}, Lcom/android/settings/device/MiuiDeviceInfoSettings;->findPreference(Ljava/lang/CharSequence;)Landroid/preference/Preference;
@@ -97,13 +108,16 @@ move-result-object v0
 
 check-cast v0, Lcom/android/settings/widget/CustomValuePreference;
 
-.line 153
+iput-object v0, p0, Lcom/android/settings/device/MiuiDeviceInfoSettings;->aog:Lcom/android/settings/widget/CustomValuePreference;
+
 invoke-virtual {p0}, Lcom/android/settings/device/MiuiDeviceInfoSettings;->getPreferenceScreen()Landroid/preference/PreferenceScreen;
 
 move-result-object v3
 
 # v0 对应上面的 move-result-object v0
 invoke-virtual {v3, v0}, Landroid/preference/PreferenceScreen;->removePreference(Landroid/preference/Preference;)Z
+
+const-string/jumbo v0, "model_number"
 ```
 
 ### 恢复『更多应用』原来的展示样式

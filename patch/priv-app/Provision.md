@@ -35,5 +35,5 @@ button_mifg_online_content
 button_upload_debug_log_key
 button_auto_update_key
 button_personalized_ad_key
-# 的键值为false
+# 的 defaultValue 为 false
 ```

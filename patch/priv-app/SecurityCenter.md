@@ -9,8 +9,7 @@ apktool命令： `apktool d -r *.apk`
 代码位置： `com/miui/networkassistant/ui/NetworkAssistantActivity.smali`
 ```
 .method private checkTrafficPurchaseEnable
-# 在某些 MIUI 版本中，该方法可能是 .method private checkTrafficPurchaseAvaliable
-# 搜索 Lcom/miui/networkassistant/utils/DeviceUtil;->IS_INTERNATIONAL_BUILD:Z 将其改成 Lcom/winter/mysu;->TRUE:Z
+# 搜索 Lcom/miui/networkassistant/utils/DeviceUtil;->IS_INTERNATIONAL_BUILD:Z 将其改为 Lcom/winter/mysu;->TRUE:Z
 ```
 
 ### 移除网络助手的流量购买提醒
@@ -26,7 +25,7 @@ apktool命令： `apktool d -r *.apk`
 invoke-static {v4}, Lmiui/provider/ExtraNetwork;->isTrafficPurchaseSupported(Landroid/content/Context;)Z
 
 move-result v2
-# 修改为 sget-boolean v0, Lcom/winter/mysu;->FALSE:Z
+# 修改为 sget-boolean v2, Lcom/winter/mysu;->FALSE:Z ，其中 v2 对应上面的 move-result v2
 ```
 代码位置： `com/miui/networkassistant/utils/LoadConfigUtil.smali`
 ```
@@ -79,7 +78,7 @@ move-result v2
 
     if-nez v0, :cond_0
 
-    const-string/jumbo v0, "zh_CN" # 关键词："zh_CN"
+    const-string/jumbo v0, "zh_CN"  # 关键词："zh_CN"
 
     invoke-static {}, Ljava/util/Locale;->getDefault()Ljava/util/Locale;
 
@@ -178,6 +177,9 @@ invoke-virtual {v1, v0}, Landroid/preference/PreferenceScreen;->removePreference
 ### 移除安全扫描的系统更新检测
 代码路径： `com/miui/antivirus`
 ```
+# 搜索代码 key_check_item_update，此代码会在两个方法出现，对其中的布尔型方法 return false
+# 移除相关设置项，代码位置： Lcom/miui/antivirus/activity/SettingsActivity.smali
+
 .method protected onCreate
 # 在该方法中搜索 preference_key_check_item_update 对应的 id（在 res/values/public.xml 可以找到）定位相关项
 # 可以发现诸如以下的代码：
@@ -216,7 +218,7 @@ invoke-virtual {v0, v1}, Landroid/preference/PreferenceCategory;->removePreferen
 # 搜索
 am_update_app_notify 
 am_ads_enable
-# 对应的布尔值函数，return false
+# 对应的布尔型方法，return false
 ```
 
 ### 优化网络助手的通知样式
