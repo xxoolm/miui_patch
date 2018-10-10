@@ -165,9 +165,9 @@ invoke-virtual {v0, p0, v1}, Landroid/content/Intent;->setClass(Landroid/content
 # 为 <PreferenceCategory android:title="@string/user_experience_program"> 增加 android:key 属性
 android:key="security_settings_access_control"
 ```
-**注意**：上述修改成功的前提是 `ad_control_settings` 所在方法必须在当前 Preferences 加载之后调用。
+**注意**：上述修改成功的前提是 `ad_control_settings` 所在方法必须在当前 `Preferences` 加载之后调用。
 
-然而部分 MIUI 版本并非如此，你需要要将该方法调用移动到当前 Preferences 的 addPreferencesFromResource 方法之后。
+然而部分 MIUI 版本并非如此，你需要要将该方法调用移动到当前 `Preferences` 的 `addPreferencesFromResource` 方法之后。
 
 移动前：
 ```
