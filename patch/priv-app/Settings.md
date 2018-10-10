@@ -131,7 +131,34 @@ const-string/jumbo v0, "model_number"
 ### 移除音效设置中的均衡器设置项
 代码位置： `com/android/settings/HeadsetSettings.smali`
 ```
-# 搜索代码 equalizer 找到其 Preference 的头部，然后在当前类中搜索该头部，将最后一处的removePreference 代码复制到其方法结束 return-void 的前面
+# 搜索 audio_effect_optimize 、equalizer 定位相应方法，可以找到诸如以下的代码：
+const-string/jumbo v0, "audio_effect_optimize"
+
+invoke-virtual {p0, v0}, Lcom/android/settings/HeadsetSettings;->findPreference(Ljava/lang/CharSequence;)Landroid/preference/Preference;
+
+move-result-object v0
+
+check-cast v0, Landroid/preference/PreferenceCategory;
+
+iput-object v0, p0, Lcom/android/settings/HeadsetSettings;->bdb:Landroid/preference/PreferenceCategory;
+
+# 省略的代码
+
+const-string/jumbo v0, "equalizer"
+
+invoke-virtual {p0, v0}, Lcom/android/settings/HeadsetSettings;->findPreference(Ljava/lang/CharSequence;)Landroid/preference/Preference;
+
+move-result-object v0
+
+iput-object v0, p0, Lcom/android/settings/HeadsetSettings;->bdc:Landroid/preference/Preference;
+
+在方法结束 return-void 前增加以下代码：
+# ->bdb 对应 audio_effect_optimize ，->bdc 对应 equalizer
+iget-object v0, p0, Lcom/android/settings/HeadsetSettings;->bdb:Landroid/preference/PreferenceCategory;
+
+iget-object v1, p0, Lcom/android/settings/HeadsetSettings;->bdc:Landroid/preference/Preference;
+
+invoke-virtual {v0, v1}, Landroid/preference/PreferenceCategory;->removePreference(Landroid/preference/Preference;)Z
 ```
 
 ### 恢复『更多应用』原来的展示样式
