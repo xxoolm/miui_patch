@@ -10,283 +10,48 @@ apktool命令： `apktool d -r *.apk`
 # return null
 ```
 
-### 移除快递物流信息详情页的菜鸟裹裹APP推广
-代码位置： `com/miui/personalassistant/express/fragment/DetailFragment.smali`
-
-修改前：
-```
-.method private showCainiaoBanner()V
-    .locals 3
-
-    const/4 v2, 0x0
-
-    iget-object v0, p0, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment;->mResult:Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment$ExpressProgressResult;
-
-    iget-boolean v0, v0, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment$ExpressProgressResult;->mHasItem:Z
-
-    if-eqz v0, :cond_0
-
-    iget-object v0, p0, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment;->mActivity:Lcom/miui/personalassistant/express/activity/ExpressBaseActivity;
-
-    invoke-static {v0}, Lcom/miui/personalassistant/express/util/CainiaoUtil;->getAuthorizedNumber(Landroid/content/Context;)Ljava/lang/String;
-
-    move-result-object v0
-
-    invoke-static {v0}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
-
-    move-result v0
-
-    if-nez v0, :cond_0
-
-    iget-object v0, p0, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment;->mGoodsDetail:Landroid/widget/LinearLayout;
-
-    invoke-virtual {v0, v2}, Landroid/widget/LinearLayout;->setVisibility(I)V
-
-    iget-object v0, p0, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment;->mExpressSummary:Landroid/widget/RelativeLayout;
-
-    new-instance v1, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment$1;
-
-    invoke-direct {v1, p0}, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment$1;-><init>(Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment;)V
-
-    # 点击事件，须删除相关代码段
-    invoke-virtual {v0, v1}, Landroid/widget/RelativeLayout;->setOnClickListener(Landroid/view/View$OnClickListener;)V
-
-    :cond_0
-    iget-object v0, p0, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment;->mBannerDivider:Landroid/widget/ImageView;
-
-    if-eqz v0, :cond_1
-
-    iget-object v0, p0, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment;->mBannerDivider:Landroid/widget/ImageView;
-
-    invoke-virtual {v0, v2}, Landroid/widget/ImageView;->setVisibility(I)V
-
-    :cond_1
-    iget-object v0, p0, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment;->mCainiaoBanner:Landroid/widget/RelativeLayout;
-
-    if-eqz v0, :cond_2
-
-    iget-object v0, p0, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment;->mCainiaoBanner:Landroid/widget/RelativeLayout;
-
-    invoke-virtual {v0, v2}, Landroid/widget/RelativeLayout;->setVisibility(I)V
-
-    iget-object v0, p0, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment;->mCainiaoBanner:Landroid/widget/RelativeLayout;
-
-    new-instance v1, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment$2;
-
-    invoke-direct {v1, p0}, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment$2;-><init>(Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment;)V
-
-    # 点击事件，须删除相关代码段
-    invoke-virtual {v0, v1}, Landroid/widget/RelativeLayout;->setOnClickListener(Landroid/view/View$OnClickListener;)V
-
-    :cond_2
-    return-void
-.end method
-```
-
-修改后：
-```
-.method private showCainiaoBanner()V
-    .locals 3
-
-    const/16 v2, 0x8 # 传参给 setVisibility 方法，使布局不可见且不占用空间
-
-    iget-object v0, p0, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment;->mResult:Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment$ExpressProgressResult;
-
-    iget-boolean v0, v0, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment$ExpressProgressResult;->mHasItem:Z
-
-    if-eqz v0, :cond_0
-
-    iget-object v0, p0, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment;->mActivity:Lcom/miui/personalassistant/express/activity/ExpressBaseActivity;
-
-    invoke-static {v0}, Lcom/miui/personalassistant/express/util/CainiaoUtil;->getAuthorizedNumber(Landroid/content/Context;)Ljava/lang/String;
-
-    move-result-object v0
-
-    invoke-static {v0}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
-
-    move-result v0
-
-    if-nez v0, :cond_0
-
-    iget-object v0, p0, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment;->mGoodsDetail:Landroid/widget/LinearLayout;
-
-    invoke-virtual {v0, v2}, Landroid/widget/LinearLayout;->setVisibility(I)V
-
-    :cond_0
-    iget-object v0, p0, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment;->mBannerDivider:Landroid/widget/ImageView;
-
-    if-eqz v0, :cond_1
-
-    iget-object v0, p0, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment;->mBannerDivider:Landroid/widget/ImageView;
-
-    invoke-virtual {v0, v2}, Landroid/widget/ImageView;->setVisibility(I)V
-
-    :cond_1
-    iget-object v0, p0, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment;->mCainiaoBanner:Landroid/widget/RelativeLayout;
-
-    if-eqz v0, :cond_2
-
-    iget-object v0, p0, Lcom/miui/personalassistant/express/fragment/ExpressProgressFragment;->mCainiaoBanner:Landroid/widget/RelativeLayout;
-
-    invoke-virtual {v0, v2}, Landroid/widget/RelativeLayout;->setVisibility(I)V
-
-    :cond_2
-    return-void
-.end method
-```
+### 修复删除小米应用商店组件后安装菜鸟裹裹导致的FC
 代码位置： `com/miui/personalassistant/ui/fragment/ExpressSettingFragment.smali`
 ```
-.method private initProviderView(Landroid/view/View;)V
-# 删除以下代码：
-invoke-virtual {v0, p0}, Landroid/widget/RelativeLayout;->setOnClickListener(Landroid/view/View$OnClickListener;)V
+.method public onClick(Landroid/view/View;)V
+# 方法1：直接切断其调用链
+# 搜索 com.cainiao.wireless 可以找到诸如以下的代码：
+:sswitch_2
+const-string/jumbo v0, "com.cainiao.wireless"
+
+invoke-static {v0}, Lcom/miui/personalassistant/util/IntentUtil;->intentToAppStore(Ljava/lang/String;)Landroid/content/Intent;
+
+move-result-object v0
+
+invoke-virtual {p0, v0}, Lcom/miui/personalassistant/ui/fragment/ExpressSettingFragment;->startActivity(Landroid/content/Intent;)V
+
+goto :goto_0
+# 删除 invoke-virtual {p0, v0}, Lcom/miui/personalassistant/ui/fragment/ExpressSettingFragment;->startActivity(Landroid/content/Intent;)V 这行代码
+
+# 方法2：修改其调用行为，调用其它应用商店
+# 将上述代码修改为：
+:sswitch_2
+const-string/jumbo v1, "com.cainiao.wireless"
+
+invoke-static {v1}, Lcom/miui/personalassistant/util/IntentUtil;->intentToAppStore(Ljava/lang/String;)Landroid/content/Intent;
+
+move-result-object v0
+
+invoke-virtual {p0}, Lcom/miui/personalassistant/ui/fragment/ExpressSettingFragment;->getActivity()Landroid/app/Activity;
+
+move-result-object v1
+
+invoke-static {v1, v0}, Lcom/miui/personalassistant/util/IntentUtil;->canResolveIntent(Landroid/content/Context;Landroid/content/Intent;)Z
+
+move-result v1
+
+if-eqz v1, :goto_0
+
+invoke-virtual {p0, v0}, Lcom/miui/personalassistant/ui/fragment/ExpressSettingFragment;->startActivity(Landroid/content/Intent;)V
+
+goto :goto_0
 ```
-
-### 移除百度api的签名保护（疑似）
-如果上述修改后负一屏功能出现异常，请继续执行当前修改。
-
-代码路径： `com/baidu/platform/comapi`
+代码位置： `com/miui/personalassistant/util/IntentUtil.smali`
 ```
-# 搜索 context must be an Application Context 所在的方法，return null
-```
-
-修改前：
-```
-.method public static a(Ljava/lang/String;Landroid/content/Context;)V
-    .locals 3
-
-    sget-boolean v0, Lcom/baidu/platform/comapi/b;->a:Z
-
-    if-nez v0, :cond_4
-
-    if-nez p1, :cond_0
-
-    new-instance v0, Ljava/lang/IllegalArgumentException;
-
-    const-string/jumbo v1, "context can not be null"
-
-    invoke-direct {v0, v1}, Ljava/lang/IllegalArgumentException;-><init>(Ljava/lang/String;)V
-
-    throw v0
-
-    :cond_0
-    instance-of v0, p1, Landroid/app/Application;
-
-    if-eqz v0, :cond_5
-
-    invoke-static {}, Lcom/baidu/platform/comapi/NativeLoader;->getInstance()Lcom/baidu/platform/comapi/NativeLoader;
-
-    invoke-static {p1}, Lcom/baidu/platform/comapi/NativeLoader;->setContext(Landroid/content/Context;)V
-
-    invoke-static {}, Lcom/baidu/platform/comapi/a;->a()Lcom/baidu/platform/comapi/a;
-
-    move-result-object v0
-
-    invoke-virtual {v0, p1}, Lcom/baidu/platform/comapi/a;->a(Landroid/content/Context;)V
-
-    invoke-static {}, Lcom/baidu/platform/comapi/a;->a()Lcom/baidu/platform/comapi/a;
-
-    move-result-object v0
-
-    invoke-virtual {v0}, Lcom/baidu/platform/comapi/a;->c()Z
-
-    check-cast p1, Landroid/app/Application;
-
-    invoke-static {p1}, Lcom/baidu/mapapi/JNIInitializer;->setContext(Landroid/app/Application;)V
-
-    if-eqz p0, :cond_3
-
-    const-string/jumbo v0, ""
-
-    invoke-virtual {p0, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v0
-
-    if-nez v0, :cond_3
-
-    :try_start_0
-    new-instance v0, Ljava/io/File;
-
-    new-instance v1, Ljava/lang/StringBuilder;
-
-    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
-
-    invoke-virtual {v1, p0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v1
-
-    const-string/jumbo v2, "/test.0"
-
-    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v1
-
-    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v1
-
-    invoke-direct {v0, v1}, Ljava/io/File;-><init>(Ljava/lang/String;)V
-
-    invoke-virtual {v0}, Ljava/io/File;->exists()Z
-
-    move-result v1
-
-    if-eqz v1, :cond_1
-
-    invoke-virtual {v0}, Ljava/io/File;->delete()Z
-
-    :cond_1
-    invoke-virtual {v0}, Ljava/io/File;->createNewFile()Z
-
-    invoke-virtual {v0}, Ljava/io/File;->exists()Z
-
-    move-result v1
-
-    if-eqz v1, :cond_2
-
-    invoke-virtual {v0}, Ljava/io/File;->delete()Z
-    :try_end_0
-    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
-
-    :cond_2
-    invoke-static {p0}, Lcom/baidu/mapapi/common/EnvironmentUtilities;->setSDCardPath(Ljava/lang/String;)V
-
-    :cond_3
-    const/4 v0, 0x1
-
-    sput-boolean v0, Lcom/baidu/platform/comapi/b;->a:Z
-
-    :cond_4
-    return-void
-
-    :cond_5
-    new-instance v0, Ljava/lang/RuntimeException;
-
-    const-string/jumbo v1, "context must be an Application Context"
-
-    invoke-direct {v0, v1}, Ljava/lang/RuntimeException;-><init>(Ljava/lang/String;)V
-
-    throw v0
-
-    :catch_0
-    move-exception v0
-
-    invoke-virtual {v0}, Ljava/lang/Exception;->printStackTrace()V
-
-    new-instance v0, Ljava/lang/IllegalArgumentException;
-
-    const-string/jumbo v1, "provided sdcard path can not used."
-
-    invoke-direct {v0, v1}, Ljava/lang/IllegalArgumentException;-><init>(Ljava/lang/String;)V
-
-    throw v0
-.end method
-```
-
-修改后：
-```
-.method public static a(Ljava/lang/String;Landroid/content/Context;)V
-    .locals 0
-
-    return-void
-.end method
+# 将该类中的 "mimarket://details" 修改为 "market://details"
 ```
