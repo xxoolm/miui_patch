@@ -20,6 +20,7 @@
 - [MIUI软件包安装程序](https://github.com/winterssy/miui_patch/blob/v10.0/patch/priv-app/MiuiPackageInstaller.md)
 - [状态栏（系统用户界面）](https://github.com/winterssy/miui_patch/blob/v10.0/patch/priv-app/MiuiSystemUI.md)
 - [短信](https://github.com/winterssy/miui_patch/blob/v10.0/patch/priv-app/Mms.md)
+- [负一屏（信息助手）](https://github.com/winterssy/miui_patch/blob/v10.0/patch/priv-app/PersonalAssistant.md)
 - [开机引导](https://github.com/winterssy/miui_patch/blob/v10.0/patch/priv-app/Provision.md)
 - [安全中心](https://github.com/winterssy/miui_patch/blob/v10.0/patch/priv-app/SecurityCenter.md)
 - [设置](https://github.com/winterssy/miui_patch/blob/v10.0/patch/priv-app/Settings.md)
