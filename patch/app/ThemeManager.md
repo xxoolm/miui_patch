@@ -9,7 +9,7 @@ apktool命令： `apktool d -r *.apk`
 .method public getAdMarker()I
 # return false
 
-# 在上面方法对应的类中有一个布尔型方法，通过 ->getImgUrls()Ljava/util/List; 定位
+# 在上面方法对应的类中有一个布尔方法，通过 ->getImgUrls()Ljava/util/List; 定位
 # return false
 # 函数原型： .method private static isSupported
 ```
