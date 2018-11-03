@@ -15,3 +15,10 @@ apktool命令： `apktool d -r *.apk`
 ```
 # 将该类中的 "mimarket://details" 修改为 "market://details"
 ```
+
+### 屏蔽更新
+代码位置： `com/miui/personalassistant/util/DownloadHelper.smali`
+```
+.method private checkVersionUpgrade()Z
+# return false
+```
