@@ -31,3 +31,12 @@
 ## framework
 - [framework.jar](https://github.com/winterssy/miui_patch/blob/v10.0/patch/framework/framework.md)
 - [services.jar](https://github.com/winterssy/miui_patch/blob/v10.0/patch/framework/services.md)
+
+## 参与贡献
+
+Fork `winterssy/miui_patch` 到你的 Github 仓库，在对应分支改动 `miui_patch` 然后 Pull requests。你的改动应当遵守以下约定：
+
+- 遵循 `miui_patch` 原有的语法/编写规则；
+- 不应删除 `miui_patch` 已有的修改策略；
+- 指明你当前使用的MIUI版本及机型，并说明你这样修改的原因；
+- 所有修改必须基于MIUI稳定版。
