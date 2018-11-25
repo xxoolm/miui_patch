@@ -52,11 +52,3 @@ goto :goto_0
 .method public onAdLoadSucceeded
 # 修改该方法的函数体与 .method public onAdLoadFailed 方法一致
 ```
-
-### 移除DRM保护
-代码位置： `com/android/thememanager/jni/DrmAgent.smali`
-```
-.method static constructor <clinit>()V
-# 关键代码： "jni_resource_drm"
-# return null
-```
