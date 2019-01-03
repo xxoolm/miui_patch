@@ -243,7 +243,7 @@ sput-object v0, Lmiui/browser/d/a$h;->c:Ljava/lang/String;
 ### 关闭消息通知及空格位推送
 代码路径： `com/android/browser`
 ```
-# 搜索以下关键词定位相关布尔型方法
+# 搜索以下关键词定位相关布尔方法
 enable_notifications
 quicklink_push
 # return false

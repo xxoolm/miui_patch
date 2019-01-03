@@ -9,7 +9,7 @@ apktool命令： `apktool d -r *.apk`
 .method public getAdMarker()I
 # return false
 
-# 在上面方法对应的类中有一个布尔型方法，通过 ->getImgUrls()Ljava/util/List; 定位
+# 在上面方法对应的类中有一个布尔方法，通过 ->getImgUrls()Ljava/util/List; 定位
 # return false
 # 函数原型： .method private static isSupported
 ```
@@ -51,12 +51,4 @@ goto :goto_0
 # 在当前路径搜索 onAdLoadSucceeded 定位相关方法
 .method public onAdLoadSucceeded
 # 修改该方法的函数体与 .method public onAdLoadFailed 方法一致
-```
-
-### 移除DRM保护
-代码位置： `com/android/thememanager/jni/DrmAgent.smali`
-```
-.method static constructor <clinit>()V
-# 关键代码： "jni_resource_drm"
-# return null
 ```
